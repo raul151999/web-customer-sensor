@@ -52,20 +52,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Animación de los indicadores LED
-    const ledIndicators = document.querySelectorAll('.led-indicator');
-    ledIndicators.forEach(indicator => {
-        // Efecto de pulso para los indicadores LED
-        indicator.addEventListener('mouseenter', function() {
-            this.style.transform = 'scale(1.1)';
-            this.style.transition = 'transform 0.3s ease';
-        });
-        
-        indicator.addEventListener('mouseleave', function() {
-            this.style.transform = 'scale(1)';
-        });
-    });
-
     // Efecto de aparición gradual al hacer scroll
     const observerOptions = {
         threshold: 0.1,
@@ -90,43 +76,8 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.observe(section);
     });
 
-    // Contador animado para simular porcentaje de humedad
-    function animateCounter() {
-        const heroSection = document.querySelector('.hero');
-        if (heroSection) {
-            // Crear elemento de demostración de humedad
-            const humidityDemo = document.createElement('div');
-            humidityDemo.innerHTML = `
-            `;
-            
-            // Agregar después del botón CTA
-            const ctaButton = heroSection.querySelector('.cta-button');
-            if (ctaButton) {
-                ctaButton.parentNode.insertBefore(humidityDemo, ctaButton.nextSibling);
-                
-                // Animar contador
-                let count = 0;
-                const counter = document.getElementById('humidity-counter');
-                const interval = setInterval(() => {
-                    count += Math.random() * 2;
-                    if (count >= 25) {
-                        count = 25;
-                        clearInterval(interval);
-                        // Cambiar color cuando llegue al límite
-                        counter.style.color = '#f39c12';
-                        counter.parentElement.innerHTML = counter.parentElement.innerHTML.replace('Nivel de Humedad:', '⚠️ ALERTA - Humedad:');
-                    }
-                    counter.textContent = Math.floor(count);
-                }, 100);
-            }
-        }
-    }
-
-    // Iniciar demostración después de 2 segundos
-    setTimeout(animateCounter, 2000);
-
     // Efecto de typing para el título principal
-    function typeWriter(element, text, speed = 100) {
+    function typeWriter(element, text, speed = 80) {
         let i = 0;
         element.innerHTML = '';
         
@@ -149,38 +100,3 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }, 500);
 });
-
-// Función para validar email
-function validateEmail(email) {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return re.test(email);
-}
-
-// Función para mostrar notificaciones personalizadas
-function showNotification(message, type = 'success') {
-    const notification = document.createElement('div');
-    notification.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        padding: 15px 20px;
-        border-radius: 5px;
-        color: white;
-        font-weight: bold;
-        z-index: 10000;
-        transition: all 0.3s ease;
-        ${type === 'success' ? 'background: #27ae60;' : 'background: #e74c3c;'}
-    `;
-    notification.textContent = message;
-    
-    document.body.appendChild(notification);
-    
-    // Remover después de 3 segundos
-    setTimeout(() => {
-        notification.style.opacity = '0';
-        notification.style.transform = 'translateX(100%)';
-        setTimeout(() => {
-            document.body.removeChild(notification);
-        }, 300);
-    }, 3000);
-}
